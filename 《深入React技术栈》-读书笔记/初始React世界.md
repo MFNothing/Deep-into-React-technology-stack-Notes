@@ -1,17 +1,3 @@
----
-layout:     post
-title:      "《深入 React 技术栈》 读书笔记 ---- React 简介"
-subtitle:   "《深入 React 技术栈》 读书笔记"
-date:       2018-09-11 12:00:00
-author:     "MIN"
-header-img: "img/post-bg-nextgen-web-pwa.jpg"
-header-mask: 0.3
-catalog:    true
-tags:
-    - React
----
-
-
 ## 初始 React 世界
 
 ### React 简介
@@ -39,5 +25,9 @@ tags:
 
 ![传统Dom更新](React-Dom-Update.jpg)
 
-* React 把真实的 DOM 树转换成
+* React 把真实的 DOM 树转换成 JavaScript 对象树，也就是 Virtual DOM。
+* 每次数据更新后，重新计算 Virtual DOM，并和上一次生成的 Virtual DOM 做对比，对发生变化的部分做批量更新。
+* React 也提供直观的 ```shouldComponentUpdate``` 生命周期函数回调，减少数据变化后不必要的 Virtual DOM 对比国产，以保证性能。
+* Virtual DOM 的渲染方式也比传统 DOM 操作好一些，但并不明显，因为对比 DOM 节点也是需要计算资源的。
+* 最大的好处是方便与其他平台集成。React 可以根据对应平台输出对应的组件。（Web DOM，Android控件，iOS控件）
 
