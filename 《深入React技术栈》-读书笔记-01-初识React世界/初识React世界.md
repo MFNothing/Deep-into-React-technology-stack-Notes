@@ -268,7 +268,22 @@ const component = <Componnet {...data}/>
 
 属性值要使用表达式，只要用 `{}` 替换 `""` 即可
 
+*HTML转义*
 
+React 会将所有要显示到 DOM 的字符串转义，防止 XSS。所以，如果 JSX 中含有转义后的实体字符，比如 `&copy` ，则到最后DOM不会正确显示，因为 React 自动把 `&copy` 中的特殊字符转义了。
+
+有几种解决方法
+
+* 直接使用UTF-8字符。
+* 使用字符对应的 Unicode编码查询编码。
+* 使用数组组装 `<div>{['cc', '<span>&copy<span>', '2019']}</div>`
+* 直接插入原始的 HTML
+
+此外，React 提供了 dangerouslySetInnerHTML 属性。正如其名，它的作用就是避免 React 转义字符，所以需要在确定必要的时候使用它：
+
+```
+<div dangerouslySetInnerHTML={{__html: 'cc &copy; 2019'}} />
+```
 
 
 
