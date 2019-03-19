@@ -285,8 +285,41 @@ React 会将所有要显示到 DOM 的字符串转义，防止 XSS。所以，�
 <div dangerouslySetInnerHTML={{__html: 'cc &copy; 2019'}} />
 ```
 
+### React 组件
 
+#### React 组件得构成
 
+![React组件的组成](The-composition-of-the-React-component.png)
+
+* React 组件基本由 属性（props）、状态（state）以及生命周期方法组成。
+* React 组件即为组件元素，组件元素被描述成纯粹的JSON 对象，意味着可以使用方法或类来构建。
+* 一旦接收到的参数或自身状态有所改变，React 组件就会执行相应的生命周期方法，最后渲染。
+
+React 提供了3种不同的方法构建 React 组件：
+
+* React.createClass
+* ES6 classes
+* 无状态函数（stateless function）
+
+**React.createClass**
+
+* 最传统、也是兼容性最好的构建组件方法
+* 在 0.14 版本发布之前，官方指定的方法
+
+```
+const Button = React.createClass({
+	getDefaultProps() {
+		return {
+			color: 'blue',
+			text: 'confirm'
+		};
+	},
+	render() {
+		const { color, text } = this.props;
+		
+	}
+})
+```
 
 
 
