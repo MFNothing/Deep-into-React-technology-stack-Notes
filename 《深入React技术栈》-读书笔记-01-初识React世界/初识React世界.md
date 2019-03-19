@@ -304,7 +304,7 @@ React 提供了3种不同的方法构建 React 组件：
 **React.createClass**
 
 * 最传统、也是兼容性最好的构建组件方法
-* 在 0.14 版本发布之前，官方指定的方法
+* 在 0.14 版本发布之前，官方指定的方法。但是现在测试已经不能使用了。
 
 ```
 const Button = React.createClass({
@@ -317,9 +317,102 @@ const Button = React.createClass({
 	render() {
 		const { color, text } = this.props;
 		
+		return(
+			<button className={'btn btn-${color}'}>
+				<em>{text}</em>
+			</button>
+    )
 	}
 })
 ```
+
+* 后面的版本需要这样使用
+* 引用 `npm install create-react-class`
+
+```
+import createReactClass from 'create-react-class';
+
+const Button = createReactClass({
+  getDefaultProps() {
+		return {
+			color: 'blue',
+			text: 'confirm'
+		};
+	},
+	render() {
+		const { color, text } = this.props;
+		
+		return(
+			<button className={'btn btn-${color}'}>
+				<em>{text}</em>
+			</button>
+    	)
+	}
+})
+
+export default Button;
+
+```
+
+当另一个组件需要调用 Button 组件时，只用写成 `<Button />`，就可以被解析成 `React.createElement(button)` 方法来创建 Button 实例。
+
+**ES6 classes**
+
+ES6 classes 的写法是通过 ES6 标准的类语法的方式来构建：
+
+```
+import React, { Component } from 'react';
+
+class Button extends Component {
+	constructor(props) {
+		super(props);
+	}
+	
+	static defaultProps = {
+		color: 'blue',
+		text: 'Confirm'
+	};
+	
+	render() {
+		const { color, text } = this.props;
+		
+		return(
+			<button className={'btn btn-${color}'}>
+				<em>{text}</em>
+			</button>
+    	)
+	}
+}
+```
+
+
+**无状态函数**
+
+```
+function Button({ color = 'blue', text = 'Confirm'}) {
+	return (
+		<button className={'btn btn-${color}'}>
+			<em>{text}</em>
+		</button>
+	)
+}
+```
+
+* 不存在 state，也没有声明周期函数。
+
+
+### 数据流
+
+在 React 中，数据是自顶向下单向流动的，即从父组件到子组件。
+
+* 顶层组件初始化 props，那么 React 会向下遍历整棵组件树，重新尝试渲染所有相关的子组件。
+* 而 state 只关心每个组件自己内部的状态，这些状态只能在组件内改变。
+* 把组件看出一个函数，那么它接收了 props 作为参数，内部由 state 作为函数内部参数，返回一个 Virtual DOM 的实现。
+
+#### state
+
+
+
 
 
 
