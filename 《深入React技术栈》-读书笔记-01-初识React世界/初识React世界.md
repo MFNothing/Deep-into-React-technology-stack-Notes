@@ -411,9 +411,23 @@ function Button({ color = 'blue', text = 'Confirm'}) {
 
 #### state
 
+* State是一个组件的UI数据模型，是组件渲染时的数据依据。
+* 通过在构造函数（constructor）中初始化 state，这也是唯一一个可以可以直接使用 `this.state={xxx:xxx}`的方式修改state的情况。
+* 在其他时候我们需要通过 `setState` 这个异步方法进行修改，在一个生命周期内的所有 `setState` 方法会合并操作。
+
+#### props
+
+* props经常被用作渲染组件和初始化状态，当一个组件被实例化之后，它的props是只读的，不可改变的。如果props在渲染过程中可以被改变，会导致这个组件显示的形态变得不可预测。只有通过父组件重新渲染的方式才可以把新的props传入组件中。
+* 要渲染一个对props加工后的值，最简单的办法就是使用局部变量或直接在JSX中计算结果。
 
 
+**子组件 prop**
 
+**组件 props**
+
+**用function prop 与父组件通信**
+
+**propTypes**
 
 
 
