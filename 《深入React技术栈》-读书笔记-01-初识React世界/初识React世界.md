@@ -423,6 +423,49 @@ function Button({ color = 'blue', text = 'Confirm'}) {
 
 **子组件 prop**
 
+```
+<Item>
+  <h1>11111</h1>
+  <p>2222</p>
+  something
+</Item>
+```
+
+```
+import React, { Component } from 'react';
+
+class Item extends Component {
+	constructor(props) {
+        super(props);
+	}
+    renderChild() {
+        const child = React.Children.map(this.props.children,(children)=>{
+              return (<div>{children.type ? children.type: children}</div>)
+          })
+        return child
+    }
+
+	render() {
+		return(
+			<div>
+                {this.renderChild()}
+			</div>
+    	)
+	}
+}
+
+export default Item;
+
+// 显示
+/*
+h1
+p
+something
+*/
+```
+
+
+
 **组件 props**
 
 **用function prop 与父组件通信**
