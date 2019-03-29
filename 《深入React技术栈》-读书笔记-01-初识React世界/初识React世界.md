@@ -423,6 +423,22 @@ function Button({ color = 'blue', text = 'Confirm'}) {
 
 **子组件 prop**
 
+* 在 React 中有一个重要且内置的 prop —— children，它代表组件的子组件集合。
+* React.Children 提供了处理 this.props.children 这个不透明数据结构的工具。
+* React.Children.map 
+	* `React.Children.map(children, function[(thisArg)])`在包含在 children 里的每个直接孩子上调用一个函数，并且this 设置为 thisArg 。
+	* 如果 children 是一个数组它将被遍历，函数将被调用为每个数组中的孩子。如果 children 是 null 或 undefined ，这个方法将返回 null 或 undefined 而不是一个数组。
+* React.Children.only
+	* `React.Children.only(this.props.children)`
+	* 验证children只有唯一一个孩子（React元素）并返回它。否则这个方法扔抛出一个错误。这个错误会导致页面显示失败。
+* React.Children.count
+	* 返回 children 中的组件总数，等于传给 map 或 forEach 的回调函数被调用的次数。
+* React.Children.forEach
+ * 类似 React.Children.map() ，但是不返回数组。
+ 
+
+需要注意的是这里children是写在使用这个组件的地方，组件标签内包含的组件，不是这个组件中 render 函数返回的里面包含的组件。如下面 `<Item>` 的子组件是 `<h1>11111</h1>`、`<p>2222</p>`和`something`，而不是它render函数内包含的组件。
+
 ```
 <Item>
   <h1>11111</h1>
@@ -468,9 +484,142 @@ something
 
 **组件 props**
 
+可以将子组件作为props传入到另一个组件中
+
+```
+<Button item={<div>hello,world</div>}/>
+```
+
+```
+class Button extends Component {
+	constructor(props) {
+		super(props);
+	}
+	render() {
+		
+		return(
+			<div className="item">
+                {this.props.item}
+            </div>
+    	)
+	}
+}
+export default Button;
+```
+
 **用function prop 与父组件通信**
 
+```
+class App extends Component {
+	constructor(props) {
+		super(props);
+	}
+	handleClick() {
+		console.log('handleClick')
+	}
+	render() {
+		
+		return(
+			<div>
+				<Button onClick={this.handleClick}></Button>
+			</div>
+    	)
+	}
+}
+```
+
+
+```
+class Button extends Component {
+	constructor(props) {
+		super(props);
+		this.buttonClick = this.buttonClick.bind(this)
+	}
+	buttonClick() {
+		this.props.onClick()
+	}
+	render() {
+		
+		return(
+			<div>
+				<div onClick={this.buttonClick}>handleClick</div>
+				<div onClick={()=>{this.props.onClick()}}>handleClick</div>
+			</div>
+    	)
+	}
+}
+export default Button;
+```
+
 **propTypes**
+
+* propTypes 用于规范 props 的类型与必需的状态。
+* 如果定义了 propTypes，那么在开发环境下，就会对组件的 props 值的类型做检查，如果传入的 props 不能与之匹配，React 将会实时在控制台里报 warning。
+* 生成环境不会检查。
+
+
+新版本需要安装 prop-types
+
+```
+import PropTypes from 'prop-types'
+
+// 这个写在写在class里面
+// static propTypes = {
+// 	onClick: PropTypes.func
+// }
+
+// 这个写在class外面，跟上面的效果一样
+Button.propTypes = {
+	onClick: PropTypes.func
+}
+```
+
+老版本
+
+```
+Button.propTypes = {
+	onClick: React.PropTypes.func
+}
+```
+
+### 生命周期
+
+* React 组件的生命周期可以分为挂载、渲染和卸载这几个阶段。
+
+#### 组件的挂载
+
+挂载过程会先后执行
+
+* componentWillMount
+* render
+* componentDidMount
+
+这些方法只会在初始化的时候执行一次。
+
+#### 组件卸载
+
+组件卸载之前会执行一个方法，通常用于执行一些清理方法，如事件回收或是清除定时器。
+
+* componentWillUnmount
+
+#### 组件更新
+
+更新过程指的是父组件向下传递 props 或组件自身执行 setState 方法时发生的一系列更新动作。
+
+当我们在shouldComponentUpdate方法返回false时，后面的方法都不会被执行，表示组件不需要更新。
+
+* shouldComponentUpdate
+* componentWillUpdate
+* render
+* componentDidUpdate
+
+需要注意的几个地方
+
+* 默认情况下，React会渲染
+
+
+
+
 
 
 
