@@ -608,6 +608,7 @@ Button.propTypes = {
 
 当我们在shouldComponentUpdate方法返回false时，后面的方法都不会被执行，表示组件不需要更新。
 
+* componentWillReceiveProps（如果是由父组件更新props而更新的话）
 * shouldComponentUpdate
 * componentWillUpdate
 * render
@@ -615,7 +616,22 @@ Button.propTypes = {
 
 需要注意的几个地方
 
-* 默认情况下，React会渲染
+* 默认情况下，React会渲染所有的节点，因为shouldComponentUpdate默认返回true。正确的组件渲染从另一个意义上说，也是性能优化的手段之一。
+* 无状态组件是没有生命周期的，渲染该类组件是，每次都会重新渲染。
+* componentWillUpdate 和 componentDidUpdate，他们分别代表更新过程中渲染前后的时刻，componentWillUpdate 方法提供需要更新的 props 和 state，而 componentWillUpdate 提供更新前的 props 和 state。
+* 不能在 componentDidUpdate 中执行 setState。
+* componentWillReceiveProps 方法中调用 setState 是不会二次渲染的。
+
+整体流程图
+
+![React生命周期](React-life-cycle.jpg)
+
+
+### React 与 DOM
+
+从 React 0.14 版本开始，React 将 React 中涉及 DOM 操作的部分剥离开，目的是为了抽象 React，同时适用于 Web 端和移动端。ReactDOM 的关注点在 DOM上，因此只适用于 Web端。
+
+在 React 组件开发实现中，我们并不会用到 ReactDOM，只有在顶层组件以及由于 React 模型所限而不得不操作DOM的时候，才会使用它。
 
 
 
