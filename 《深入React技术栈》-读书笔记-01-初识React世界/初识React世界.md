@@ -633,6 +633,29 @@ Button.propTypes = {
 
 在 React 组件开发实现中，我们并不会用到 ReactDOM，只有在顶层组件以及由于 React 模型所限而不得不操作DOM的时候，才会使用它。
 
+#### ReactDOM
+
+ReactDOM 中的API 非常少，只有 findDOMNode、unmountComponentAtNode 和 render。
+
+**findDOMNode**
+
+在之前的组件介绍的组件得生命周期中，DOM 真正被添加到 HTML 中的生命周期方法是 componentDidMount 和 componentDidUpdate 方法。在这两个方法中，我们可以获取真正的DOM元素。React 提供的获取DOM元素的方法有两种，其中一种就是ReactDOM提供的 findDOMNode。
+
+```
+import ReactDOM from 'react-dom'
+
+componentDidMount() {
+	const dom = ReactDOM.findDOMNode(this)
+}
+```
+
+findDOMNode 只对已经挂载的组件有效。
+
+**render**
+
+```
+ReactDOM.render(element, container[, callback])
+```
 
 
 
